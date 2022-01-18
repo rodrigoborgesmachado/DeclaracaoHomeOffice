@@ -37,22 +37,24 @@ $(document).ready(function () {
     });
 })
 
-function BuscarDocumento(nome, cpf){
+function BuscarDocumento(Nome, CPF){
     openLoader();
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://declaracaohomeoffice.sunsalesystem.com.br/PHP/GetResultados.php?nome=" + nome + "&cpf=" + cpf + "");
+        var dados = JSON.stringify({Nome, CPF});
+
+        xhr.open("POST", "http://declaracaohomeoffice.sunsalesystem.com.br/PHP/GetResultados.php");
         xhr.addEventListener("load", function() {
             if (xhr.status == 200) {
                 var file = JSON.parse(xhr.responseText).Arquivo64;
-                downloadURI(file, nome + '.html');
+                downloadURI(file, Nome + '.html');
             } else {
                 alert('erro');
             }
             removeLoader();
         });
 
-        xhr.send(null);
+        xhr.send(dados);
 }
 
 function downloadURI(uri, name) {
