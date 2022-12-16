@@ -37,11 +37,13 @@ $(document).ready(function () {
     });
 })
 
-function BuscarDocumento(Nome, CPF){
+function BuscarDocumento(Nome, CPF, curso){
     openLoader();
 
         var xhr = new XMLHttpRequest();
-        var dados = JSON.stringify({Nome, CPF});
+        
+        var uri = curso == 'informatica' ? 'INFORMATICA' : 'MEIO_AMBIENTE';
+        var dados = JSON.stringify({Nome, CPF, uri});
 
         xhr.open("POST", "http://declaracaohomeoffice.sunsalesystem.com.br/PHP/GetResultados.php");
         xhr.addEventListener("load", function() {

@@ -51,6 +51,13 @@
                             CPF
                         </h3>
                         <input class="form-control" id="cpf" name="cpf" placeholder="CPF" type="text" required>
+                        <h3>
+                            Tipo
+                        </h3>
+                        <select class="form-control" id="curso" name="curso" required>
+                            <option value="informatica" selected>Informática</option>
+                            <option value="meioambiente">Meio Ambiente</option>
+                        </select>
                         <h4 style="text-align: center;">
                             <button class="buttonStartGame" onclick="GerarDeclaracao()">Gerar Declaração</button>
                         </h4>
@@ -71,7 +78,7 @@
     removeLoader();
 
     function GerarDeclaracao(){
-        BuscarDocumento(document.getElementById('nome').value, document.getElementById('cpf').value);
+        BuscarDocumento(document.getElementById('nome').value, document.getElementById('cpf').value, document.getElementById('curso').value);
     }
 
     function removeLoader(){
