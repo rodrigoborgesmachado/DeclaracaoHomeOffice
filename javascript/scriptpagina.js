@@ -37,26 +37,37 @@ $(document).ready(function () {
     });
 })
 
-function BuscarDocumento(Nome, CPF, curso){
+function BuscarDocumento(nome, cpf, curso){
     openLoader();
 
-        var xhr = new XMLHttpRequest();
-        
-        var uri = curso == 'informatica' ? 'INFORMATICA' : 'MEIO_AMBIENTE';
-        var dados = JSON.stringify({Nome, CPF, uri});
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Accept", "text/plain");
 
-        xhr.open("POST", "https://apisunsale.azurewebsites.net/api/Estagiario");
-        xhr.addEventListener("load", function() {
-            if (xhr.status == 200) {
-                var file = JSON.parse(xhr.responseText).Arquivo64;
-                downloadURI(file, Nome + '.html');
-            } else {
-                alert('erro');
-            }
-            removeLoader();
-        });
+    var raw = JSON.stringify({
+      "nome": nome,
+        "cpf": cpf,
+        "tipo": curso
+    });
 
-        xhr.send(dados);
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://apisunsale.azurewebsites.net/api/Estagiario", requestOptions)
+    .then((response) => response.text())
+        .then(responseData => {
+        var file = JSON.parse(responseData).object;
+        downloadURI(file, nome + '.html');
+        removeLoader();
+      })
+      .catch(error => {
+        alert('error' + error);
+        removeLoader();
+      });
 }
 
 function downloadURI(uri, name) {
