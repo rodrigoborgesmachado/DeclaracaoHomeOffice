@@ -45,7 +45,7 @@ function BuscarDocumento(Nome, CPF, curso){
         var uri = curso == 'informatica' ? 'INFORMATICA' : 'MEIO_AMBIENTE';
         var dados = JSON.stringify({Nome, CPF, uri});
 
-        xhr.open("POST", "http://declaracaohomeoffice.sunsalesystem.com.br/PHP/GetResultados.php");
+        xhr.open("POST", "https://apisunsale.azurewebsites.net/api/Estagiario");
         xhr.addEventListener("load", function() {
             if (xhr.status == 200) {
                 var file = JSON.parse(xhr.responseText).Arquivo64;
